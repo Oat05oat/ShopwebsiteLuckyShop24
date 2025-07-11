@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuckyShop24</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap");
+      :root {
+        --primary-color: #4f46e5;
+        --secondary-color: #10b981;
+        --background-color: #111827;
+        --surface-color: #1f2937;
+        --text-color: #f9fafb;
+        --text-muted-color: #9ca3af;
+        --border-color: #374151;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Sarabun", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      header {
+        background-color: rgba(31, 41, 55, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+      nav a {
+        color: var(--text-color);
+        text-decoration: none;
+        margin-left: 20px;
+        transition: color 0.3s ease;
+      }
+      nav a:hover {
+        color: var(--primary-color);
+      }
+      .hero {
+        background: linear-gradient(
+            rgba(17, 24, 39, 0.8),
+            rgba(17, 24, 39, 0.8)
+          ),
+          url(https://i.postimg.cc/vHg0kGhN/Gemini-Generated-Image-uuo91xuuo91xuuo9.png)
+            center/cover no-repeat;
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        padding: 4rem 1rem;
+      }
+      .hero h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .btn {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: background-color 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #4338ca;
+      }
+      section {
+        padding: 4rem 0;
+      }
+      section:target {
+        padding-top: 100px;
+        margin-top: -80px;
+      }
+      section h2,
+      section h3 {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      .rules {
+        background-color: var(--surface-color);
+        padding: 2rem;
+        border-radius: 12px;
+      }
+      .rules p {
+        margin-bottom: 0.5rem;
+        color: var(--text-muted-color);
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+      .card {
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+      .card img {
+        max-width: 100px;
+        height: 100px;
+        margin-bottom: 1rem;
+        object-fit: contain;
+        align-self: center;
+      }
+      .card h4 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+      .card .price {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        font-weight: 700;
+        margin: 1rem 0;
+      }
+      .card p {
+        color: var(--text-muted-color);
+        flex-grow: 1;
+        margin-bottom: 1rem;
+      }
+      .card .tag {
+        position: absolute;
+        top: 15px;
+        right: -30px;
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 5px 30px;
+        transform: rotate(45deg);
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+      .card .tag.promotion {
+        background-color: #f59e0b;
+      }
+      .coupon-card .card-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-align: left;
+      }
+      .review-form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: var(--surface-color);
+        padding: 2rem;
+        border-radius: 12px;
+      }
+      #review-form input,
+      #review-form textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        background-color: var(--background-color);
+        color: var(--text-color);
+      }
+      .star-rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+      .star-rating input {
+        display: none;
+      }
+      .star-rating label {
+        font-size: 2rem;
+        color: var(--text-muted-color);
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      .star-rating input:checked ~ label,
+      .star-rating label:hover,
+      .star-rating label:hover ~ label {
+        color: #f59e0b;
+      }
+      .review-list {
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .review-card {
+        background-color: var(--surface-color);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-color);
+      }
+      .review-card .rating {
+        color: #f59e0b;
+        font-size: 1.2rem;
+      }
+      .review-card .comment {
+        color: var(--text-color);
+        margin: 0.5rem 0;
+        font-style: italic;
+      }
+      .review-card .email {
+        color: var(--text-muted-color);
+        font-size: 0.9rem;
+      }
+      footer {
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-muted-color);
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1001;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background-color: var(--surface-color);
+        padding: 2rem;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+        animation: fadeIn 0.3s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .close-button {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--text-muted-color);
+      }
+      .close-button:hover {
+        color: var(--text-color);
+      }
+      .modal-instruction {
+        color: #f59e0b;
+        margin: 1rem 0;
+        font-weight: 700;
+      }
+      .modal-content img {
+        max-width: 200px;
+        margin: 1rem auto;
+        background-color: white;
+        padding: 10px;
+      }
+      .coupon-code {
+        background-color: var(--background-color);
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-top: 0.5rem;
+        border: 2px dashed var(--primary-color);
+      }
+      .loader-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--background-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+      .loader {
+        border: 8px solid var(--surface-color);
+        border-top: 8px solid var(--primary-color);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @media (max-width: 768px) {
+        .hero h2 {
+          font-size: 2rem;
+        }
+        header .container {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    </style>
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  </head>
+  <body>
+    <div id="loader" class="loader-container"><div class="loader"></div></div>
+
+    <header>
+      <div class="container">
+        <h1 class="logo">LuckyShop24</h1>
+        <nav>
+          <a href="#home">หน้าแรก</a>
+          <a href="#products">สินค้า</a>
+          <a href="#coupons">คูปอง</a>
+          <a href="https://line.me/ti/p/~@yourlineid" target="_blank"
+            >กลุ่มสะสมแต้ม</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="container">
+          <h2>ยินดีต้อนรับเข้าสู่เว็บไซต์ ร้านLuckyShop24</h2>
+          <p>แอปพลิเคชันคุณภาพสูง พร้อมการรับประกันและการดูแลตลอดการใช้งาน</p>
+          <a href="#products" class="btn">ดูสินค้าทั้งหมด</a>
+        </div>
+      </section>
+
+      <section class="rules container">
+        <h3><i class="ph ph-shield-check"></i> กฎและเงื่อนไขการใช้งาน</h3>
+        <p>1. สินค้าทุกชิ้นเป็นการสมัครใช้งานตามวันเเละเวลาที่ลูกค้าซื้อ</p>
+        <p>2. 1 บัญชี สามารถใช้งานได้ 1 ผู้ใช้เท่านั้น ห้ามแชร์หรือแบ่งปัน</p>
+        <p>3. ร้านค้ารับประกันการใช้งานตลอดอายุการสมัคร</p>
+        <p>4. หากมีปัญหา กรุณาติดต่อแอดมินผ่านทางLine @732fqlwh</p>
+      </section>
+
+      <section id="products" class="container">
+        <h2><i class="ph ph-shopping-bag-open"></i> สินค้าของเรา</h2>
+        <div id="product-list" class="grid-container"></div>
+      </section>
+
+      <section id="coupons" class="container">
+        <h2><i class="ph ph-ticket"></i> คูปองส่วนลด</h2>
+        <div id="coupon-list" class="grid-container"></div>
+      </section>
+
+      <section id="reviews" class="container">
+        <h2><i class="ph ph-star"></i> รีวิวจากลูกค้า</h2>
+        <div class="review-form-container">
+          <h3>ให้คะแนนร้านค้า</h3>
+          <form id="review-form">
+            <input
+              type="email"
+              id="review-email"
+              placeholder="กรอกอีเมลของคุณ (เพื่อยืนยัน)"
+              required
+            />
+            <div class="star-rating">
+              <input type="radio" id="5-stars" name="rating" value="5" /><label
+                for="5-stars"
+                >★</label
+              >
+              <input type="radio" id="4-stars" name="rating" value="4" /><label
+                for="4-stars"
+                >★</label
+              >
+              <input type="radio" id="3-stars" name="rating" value="3" /><label
+                for="3-stars"
+                >★</label
+              >
+              <input type="radio" id="2-stars" name="rating" value="2" /><label
+                for="2-stars"
+                >★</label
+              >
+              <input type="radio" id="1-star" name="rating" value="1" /><label
+                for="1-star"
+                >★</label
+              >
+            </div>
+            <textarea
+              id="review-comment"
+              placeholder="ความคิดเห็นของคุณ..."
+              required
+            ></textarea>
+            <button type="submit" class="btn">ส่งรีวิว</button>
+          </form>
+        </div>
+        <div id="review-list" class="review-list"></div>
+      </section>
+    </main>
+
+    <footer><p>© 2025 LuckyShop24. All Rights Reserved.</p></footer>
+
+    <div id="coupon-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h3>รับสิทธิ์ส่วนลดของคุณ!</h3>
+        <p class="modal-instruction">
+          กรุณาแคปหน้าจอเพื่อยืนยันรับสิทธิ์กับแอดมิน
+        </p>
+        <img id="modal-qrcode" src="" alt="QR Code" />
+        <p>หรือใช้รหัส:</p>
+        <div id="modal-code" class="coupon-code"></div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // ##################################################################
+        // ##  สำคัญ! แก้ไขแค่บรรทัดด้านล่างนี้ โดยใส่ URL ของคุณเอง        ##
+        // ##################################################################
+        const API_URL =
+          "https://script.google.com/macros/s/AKfycbyxtUqev1-FPDvxNAGmVbOQHVYK6FnyRmeVsehQsaguJNZFBkJTlqCsdmoVGgatnMWf/exec";
+
+        // ------------------- ไม่ต้องแก้ไขโค้ดส่วนที่เหลือ -------------------
+        const loader = document.getElementById("loader");
+        const productList = document.getElementById("product-list");
+        const couponList = document.getElementById("coupon-list");
+        const reviewList = document.getElementById("review-list");
+        const reviewForm = document.getElementById("review-form");
+
+        const showLoader = () => {
+          if (loader) loader.style.display = "flex";
+        };
+        const hideLoader = () => {
+          if (loader) {
+            loader.style.opacity = "0";
+            setTimeout(() => {
+              loader.style.display = "none";
+            }, 500);
+          }
+        };
+
+        async function fetchData(path) {
+          try {
+            const response = await fetch(`${API_URL}?path=${path}`);
+            if (!response.ok)
+              throw new Error(`HTTP error! status: ${response.status}`);
+            return await response.json();
+          } catch (error) {
+            console.error(`Could not fetch ${path}:`, error);
+            alert(`เกิดข้อผิดพลาดในการโหลดข้อมูล ${path}`);
+            return [];
+          }
+        }
+
+        function renderProducts(products) {
+          if (!products || products.length === 0) {
+            productList.innerHTML = "<p>ไม่พบสินค้าในขณะนี้</p>";
+            return;
+          }
+          productList.innerHTML = products
+            .map(
+              (p) => `
+                    <div class="card">
+                        ${
+                          p.tag
+                            ? `<div class="tag ${p.tag.toLowerCase()}">${
+                                p.tag
+                              }</div>`
+                            : ""
+                        }
+                        <img src="${
+                          p.imageUrl || "https://via.placeholder.com/150"
+                        }" alt="${p.name || "Product"}">
+                        <h4>${p.name || "ไม่มีชื่อสินค้า"}</h4>
+                        <p>${p.description || ""}</p> 
+                        <div class="price">${p.price || 0} บาท</div>
+                        <a href="#coupons" class="btn">ดูโปรโมชั่น</a>
+                    </div>
+                `
+            )
+            .join("");
+        }
+
+        function renderCoupons(coupons) {
+          if (!coupons || coupons.length === 0) {
+            couponList.innerHTML = "<p>ยังไม่มีคูปองในขณะนี้</p>";
+            return;
+          }
+          couponList.innerHTML = coupons
+            .map(
+              (c) => `
+                    <div class="card coupon-card">
+                        <div class="card-content">
+                            <img src="${
+                              c.productImageUrl ||
+                              "https://via.placeholder.com/150"
+                            }" alt="Product Image">
+                            <div>
+                                <h4>${c.couponName || "คูปอง"}</h4>
+                                <p>${c.description || ""}</p>
+                                <button class="btn" data-code="${
+                                  c.code || ""
+                                }">กดรับคูปอง</button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            )
+            .join("");
+        }
+
+        function renderReviews(reviews) {
+          if (!reviews || reviews.length === 0) {
+            reviewList.innerHTML =
+              '<p style="text-align: center;">ยังไม่มีรีวิว</p>';
+            return;
+          }
+          reviewList.innerHTML = reviews
+            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+            .map(
+              (r) => `
+                    <div class="review-card">
+                        <div class="rating">${"★".repeat(r.rating)}${"☆".repeat(
+                5 - r.rating
+              )}</div>
+                        <p class="comment">"${
+                          r.comment || "ไม่มีความคิดเห็น"
+                        }"</p>
+                        <p class="email">โดย: ${r.email.substring(
+                          0,
+                          3
+                        )}****@...</p>
+                    </div>
+                `
+            )
+            .join("");
+        }
+
+        async function handleReviewSubmit(e) {
+          e.preventDefault();
+          showLoader();
+          const email = document.getElementById("review-email").value;
+          const rating = document.querySelector('input[name="rating"]:checked');
+          const comment = document.getElementById("review-comment").value;
+          if (!rating) {
+            alert("กรุณาให้คะแนนดาว");
+            hideLoader();
+            return;
+          }
+          const reviewData = {
+            path: "submit-review",
+            data: { email, rating: rating.value, comment },
+          };
+          try {
+            await fetch(API_URL, {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(reviewData),
+            });
+            alert("ขอบคุณสำหรับรีวิวของคุณ!");
+            reviewForm.reset();
+            const newReviews = await fetchData("reviews");
+            renderReviews(newReviews);
+          } catch (error) {
+            console.error("Error submitting review:", error);
+            alert("เกิดข้อผิดพลาดในการส่งรีวิว");
+          } finally {
+            hideLoader();
+          }
+        }
+
+        function setupCouponModal() {
+          const couponModal = document.getElementById("coupon-modal");
+          const closeModalBtn = document.querySelector(".close-button");
+          const modalQrCode = document.getElementById("modal-qrcode");
+          const modalCode = document.getElementById("modal-code");
+          couponList.addEventListener("click", (e) => {
+            if (e.target.tagName === "BUTTON") {
+              const code = e.target.dataset.code;
+              if (code) {
+                // Generate QR Code from API based on the coupon code
+                modalQrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${code}`;
+                modalCode.textContent = code;
+                couponModal.style.display = "flex";
+              }
+            }
+          });
+          if (closeModalBtn)
+            closeModalBtn.addEventListener("click", () => {
+              couponModal.style.display = "none";
+            });
+          if (couponModal)
+            window.addEventListener("click", (e) => {
+              if (e.target === couponModal) couponModal.style.display = "none";
+            });
+        }
+
+        async function loadAllData() {
+          showLoader();
+          const [products, coupons, reviews] = await Promise.all([
+            fetchData("products"),
+            fetchData("coupons"),
+            fetchData("reviews"),
+          ]);
+          renderProducts(products);
+          renderCoupons(coupons);
+          renderReviews(reviews);
+          hideLoader();
+        }
+
+        if (API_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE" || !API_URL) {
+          alert(
+            "สำคัญ! กรุณาใส่ URL ของ Google Apps Script ที่ถูกต้องในไฟล์ script.js ก่อน!"
+          );
+          hideLoader();
+        } else {
+          loadAllData();
+          setupCouponModal();
+          reviewForm.addEventListener("submit", handleReviewSubmit);
+        }
+      });
+    </script>
+  </body>
+</html>
